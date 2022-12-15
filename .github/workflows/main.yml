@@ -17,7 +17,7 @@ env:
   PATCH_VERSION_202210: 2022.1.0.0
  
 jobs:
-  wait_for_common:
+  check_common:
     runs-on: ubuntu-latest
     steps:
 
@@ -30,12 +30,12 @@ jobs:
 
       - run: pip install -r requirements.txt
 
-      - name: Wait for Common to Complete
+      - name: Check Common Workflow
         run: |
           python wait.py "${{ secrets.GITHUB_TOKEN }}"
 
   job1:
-    needs: wait_for_common
+    needs: check_common
     runs-on: ubuntu-latest
     steps:
       - name: Wait for 5 Seconds
