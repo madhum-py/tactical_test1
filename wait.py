@@ -56,7 +56,9 @@ while True:
             logging.info(f"Workflow '{workflow_name} (Run Number : #{workflow_run_number}) is currently in '{workflow_status}' State.")
             if triggered_by_common == "true":
                 logging.info("This Job has been triggered by Upstream Workflow. Hence, moving to next steps")
-                break
+                #break
+                sys.exit(1)
+                
             #os.system("sleep 5")
             else:
                 logging.info("Hence, stopping the workflow")
