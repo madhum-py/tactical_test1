@@ -24,6 +24,7 @@ headers = {
 
 proceed = False
 
+
 logging.info("Checking if there are any Job in Queue or In Progress")
 no_wait = True
 while True:
