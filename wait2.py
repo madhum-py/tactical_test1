@@ -56,8 +56,8 @@ while True:
             logging.info(f"Workflow '{workflow_name} (Run Number : #{workflow_run_number}) is currently in '{workflow_status}' State.")
             if triggered_by_common == "true":
                 logging.info("This Job has been triggered by Upstream Workflow. Hence, moving to next steps")
-                #break
-                sys.exit(1)
+                break
+                #sys.exit(1)
                 
             #os.system("sleep 5")
             else:
@@ -70,6 +70,6 @@ while True:
         if count == 12:
             break
 
-    if go_ahead:
+    if go_ahead and triggered_by_common != "true":
         logging.info("Common job is not in Queued/In Progress state. Hence, starting the Workflow")
         break
