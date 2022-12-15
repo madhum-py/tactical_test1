@@ -52,7 +52,7 @@ while True:
 
         status_list = ["in_progress", "queued", "requested", "waiting"]
         if workflow_status in status_list:
-            logging.info(f"Workflow '{workflow_name} (Run Number : #{workflow_run_number}) is currently in '{workflow_status}' State. Hence, waiting for 5 seconds")
+            logging.info(f"Workflow '{workflow_name} (Run Number : #{workflow_run_number}) is currently in '{workflow_status}' State. Hence, stopping this workflow")
             #os.system("sleep 5")
             sys.exit(1)
             go_ahead = False
@@ -63,8 +63,5 @@ while True:
             break
 
     if go_ahead:
-        if no_wait:
-            logging.info("No recent job in Queued/In Progress. Hence, starting the Workflow")
-        else:
-            logging.info("All the workflows are completed now. Hence, starting the Workflow.")
+        logging.info("Common job is not in Queued/In Progress. Hence, starting the Workflow")
         break
