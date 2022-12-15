@@ -35,6 +35,7 @@ jobs:
           python wait.py
 
   job1:
+    needs: wait_for_common
     runs-on: ubuntu-latest
     steps:
       - name: Wait for 5 Seconds
