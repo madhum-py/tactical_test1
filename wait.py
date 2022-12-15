@@ -5,6 +5,8 @@ import logging
 from datetime import datetime
 import time
 
+token = sys.argv[1]
+
 current_timestamp_raw = datetime.now()
 current_timestamp = current_timestamp_raw.strftime("%Y%m%d-%I%M%S")
 

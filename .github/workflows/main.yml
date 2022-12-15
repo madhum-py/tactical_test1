@@ -32,7 +32,7 @@ jobs:
 
       - name: Run Wait
         run: |
-          python wait.py
+          python wait.py "${{ secrets.GITHUB_TOKEN }}"
 
   job1:
     needs: wait_for_common
