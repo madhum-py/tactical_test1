@@ -28,7 +28,7 @@ headers = {
 proceed = False
 
 
-logging.info("Checking if there are any Job in Queue or In Progress")
+logging.info("Checking if there are any Jobs in Queue or In Progress")
 no_wait = True
 while True:
     response = requests.request(method="GET", url="https://api.github.com/repos/madhum-py/common_test/actions/runs?per_page=30", headers = headers)
@@ -71,6 +71,7 @@ while True:
         if count == 12:
             break
 
-    if go_ahead and triggered_by_common != "true":
-        logging.info("Common job is not in Queued/In Progress state. Hence, starting the Workflow")
+    if go_ahead: 
+        if triggered_by_common != "true":
+            logging.info("Common job is not in Queued/In Progress state. Hence, starting the Workflow")
         break
