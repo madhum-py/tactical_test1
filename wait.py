@@ -19,7 +19,7 @@ logging.basicConfig(
     ]
 )
 
-gh_access_token = 'token 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'
+gh_access_token = f'token {token}'
 
 headers = {
     'Authorization': gh_access_token
