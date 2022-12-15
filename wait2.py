@@ -6,9 +6,11 @@ from datetime import datetime
 import time
 
 token = sys.argv[1]
+triggered_by_common = sys.argv[2]
 
 current_timestamp_raw = datetime.now()
 current_timestamp = current_timestamp_raw.strftime("%Y%m%d-%I%M%S")
+
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s [%(levelname)s] - %(message)s",
@@ -16,11 +18,16 @@ logging.basicConfig(
         logging.StreamHandler()
     ]
 )
+
 gh_access_token = f'token {token}'
+
 headers = {
     'Authorization': gh_access_token
 }
+
 proceed = False
+
+
 logging.info("Checking if there are any Job in Queue or In Progress")
 no_wait = True
 while True:
@@ -46,14 +53,23 @@ while True:
 
         status_list = ["in_progress", "queued", "requested", "waiting"]
         if workflow_status in status_list:
-            logging.info(f"Workflow '{workflow_name} (Run Number : #{workflow_run_number}) is currently in '{workflow_status}' State. Hence, stopping this workflow")
+            logging.info(f"Workflow '{workflow_name} (Run Number : #{workflow_run_number}) is currently in '{workflow_status}' State.")
+            if triggered_by_common == "true":
+                logging.info("This Job has been triggered by Upstream Workflow. Hence, moving to next steps")
+                #break
+                sys.exit(1)
+                
             #os.system("sleep 5")
-            sys.exit(1)
+            else:
+                logging.info("Hence, stopping the workflow")
+                sys.exit(1)
             go_ahead = False
             no_wait = False
             break
+
         if count == 12:
             break
+
     if go_ahead:
         logging.info("Common job is not in Queued/In Progress state. Hence, starting the Workflow")
         break

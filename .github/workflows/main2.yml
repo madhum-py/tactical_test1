@@ -36,7 +36,7 @@ jobs:
 
       - name: Check Common Workflow
         run: |
-          python wait.py "${{ secrets.GITHUB_TOKEN }}" "${{inputs.TRIGGERED_BY_COMMON}}"
+          python wait2.py "${{ secrets.GITHUB_TOKEN }}" "${{inputs.TRIGGERED_BY_COMMON}}"
 
   job1:
     needs: check_common
