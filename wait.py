@@ -17,7 +17,7 @@ logging.basicConfig(
     ]
 )
 
-gh_access_token = 'token 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'
+gh_access_token = 'token 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'
 
 headers = {
     'Authorization': gh_access_token
@@ -30,6 +30,8 @@ logging.info("Checking if there are any Job in Queue or In Progress")
 no_wait = True
 while True:
     response = requests.request(method="GET", url="https://api.github.com/repos/madhum-py/common_test/actions/runs?per_page=30", headers = headers)
+    print(response.status_code)
+    print(response.json())
     #print(response.status_code)
     #print(response.content)
     #print(response.json())
