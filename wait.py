@@ -63,5 +63,5 @@ while True:
             break
 
     if go_ahead:
-        logging.info("Common job is not in Queued/In Progress. Hence, starting the Workflow")
+        logging.info("Common job is not in Queued/In Progress state. Hence, starting the Workflow")
         break
