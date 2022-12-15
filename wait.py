@@ -30,7 +30,7 @@ no_wait = True
 while True:
     response = requests.request(method="GET", url="https://api.github.com/repos/madhum-py/common_test/actions/runs?per_page=30", headers = headers)
     print(response.status_code)
-    print(response.content)
+    #print(response.content)
     ##print(response.json())
     ##print(response.headers)
     link_header = (response.headers)['Link'].split(";")
