@@ -54,6 +54,7 @@ while True:
         status_list = ["in_progress", "queued", "requested", "waiting"]
         if workflow_status in status_list:
             logging.info(f"Workflow '{workflow_name} (Run Number : #{workflow_run_number}) is currently in '{workflow_status}' State.")
+            logging.info(f"Triggered by Common: {triggered_by_common}")
             if triggered_by_common == "true":
                 logging.info("This Job has been triggered by Upstream Workflow. Hence, moving to next steps")
                 break
