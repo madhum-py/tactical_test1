@@ -54,7 +54,7 @@ while True:
         if workflow_status in status_list:
             logging.info(f"Workflow '{workflow_name} (Run Number : #{workflow_run_number}) is currently in '{workflow_status}' State. Hence, waiting for 5 seconds")
             #os.system("sleep 5")
-            time.sleep(5)
+            sys.exit(1)
             go_ahead = False
             no_wait = False
             break
