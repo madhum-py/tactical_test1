@@ -14,7 +14,6 @@ logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s [%(levelname)s] - %(message)s",
     handlers=[
-        #logging.FileHandler(f"./{current_timestamp}.log"),
         logging.StreamHandler()
     ]
 )
@@ -32,12 +31,6 @@ logging.info("Checking if there are any Job in Queue or In Progress")
 no_wait = True
 while True:
     response = requests.request(method="GET", url="https://api.github.com/repos/madhum-py/common_test/actions/runs?per_page=30", headers = headers)
-    #print(response.status_code)
-    #print(response.json())
-    #print(response.status_code)
-    #print(response.content)
-    #print(response.json())
-    #print(response.headers)
     if 'Link' in response.headers.keys():
         link_header = (response.headers)['Link'].split(";")
         last_index = link_header.index(' rel="last"')
@@ -56,8 +49,6 @@ while True:
         workflow_started_at = i['created_at']
         workflow_status = i['status']
         workflow_run_number = i['run_number']
-        #print(workflow_status)
-        #print(i['conclusion'])
 
         status_list = ["in_progress", "queued", "requested", "waiting"]
         if workflow_status in status_list:

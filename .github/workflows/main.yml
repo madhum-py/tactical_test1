@@ -30,7 +30,7 @@ jobs:
 
       - run: pip install -r requirements.txt
 
-      - name: Run Wait
+      - name: Wait for Common to Complete
         run: |
           python wait.py "${{ secrets.GITHUB_TOKEN }}"
 
