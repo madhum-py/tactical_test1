@@ -6,7 +6,7 @@ from datetime import datetime
 import time
 
 token = sys.argv[1]
-triggered_by_common = sys.argv[2]
+triggered_by_upstream = sys.argv[2]
 
 current_timestamp_raw = datetime.now()
 current_timestamp = current_timestamp_raw.strftime("%Y%m%d-%I%M%S")
@@ -54,15 +54,15 @@ while True:
         status_list = ["in_progress", "queued", "requested", "waiting"]
         if workflow_status in status_list:
             logging.info(f"Workflow '{workflow_name} (Run Number : #{workflow_run_number}) is currently in '{workflow_status}' State.")
-            logging.info(f"Triggered by Common: {triggered_by_common}")
-            if triggered_by_common == "true":
-                logging.info("This Job has been triggered by Upstream Workflow. Hence, moving to next steps")
+            logging.info(f"Triggered by Upstream Workflow: {triggered_by_upstream}")
+            if triggered_by_upstream == "true":
+                logging.info("This Job has been triggered by Upstream Workflow. Hence, starting the workflow")
                 break
                 #sys.exit(1)
                 
             #os.system("sleep 5")
             else:
-                logging.info("Hence, stopping the workflow")
+                logging.info("This Worfklow will be triggered once Upstream workflow is completed. Hence, stopping the workflow")
                 sys.exit(1)
             go_ahead = False
             no_wait = False
@@ -72,6 +72,6 @@ while True:
             break
 
     if go_ahead: 
-        if triggered_by_common != "true":
-            logging.info("Common job is not in Queued/In Progress state. Hence, starting the Workflow")
+        if triggered_by_upstream != "true":
+            logging.info("Upstream job is not in Queued/In Progress state. Hence, starting the Workflow")
         break
