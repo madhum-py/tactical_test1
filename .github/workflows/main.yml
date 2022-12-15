@@ -17,6 +17,23 @@ env:
   PATCH_VERSION_202210: 2022.1.0.0
  
 jobs:
+  wait_for_common:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Checkout SCPO
+        uses: actions/checkout@v3
+      
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.10' 
+
+      - run: pip install -r requirements.txt
+
+      - name: Run Wait
+        run: |
+          python wait.py
+
   job1:
     runs-on: ubuntu-latest
     steps:
