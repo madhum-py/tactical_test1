@@ -3,6 +3,7 @@ import sys
 import os
 import logging
 from datetime import datetime
+import time
 
 current_timestamp_raw = datetime.now()
 current_timestamp = current_timestamp_raw.strftime("%Y%m%d-%I%M%S")
@@ -11,7 +12,7 @@ logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s [%(levelname)s] - %(message)s",
     handlers=[
-        logging.FileHandler(f"./{current_timestamp}.log"),
+        #logging.FileHandler(f"./{current_timestamp}.log"),
         logging.StreamHandler()
     ]
 )
@@ -29,11 +30,11 @@ logging.info("Checking if there are any Job in Queue or In Progress")
 no_wait = True
 while True:
     response = requests.request(method="GET", url="https://api.github.com/repos/madhum-py/common_test/actions/runs?per_page=30", headers = headers)
-    print(response.status_code)
+    #print(response.status_code)
     #print(response.content)
-    ##print(response.json())
-    print(response.headers)
-    if 'Link' in response.headers.keys:
+    #print(response.json())
+    #print(response.headers)
+    if 'Link' in response.headers.keys():
         link_header = (response.headers)['Link'].split(";")
         last_index = link_header.index(' rel="last"')
         number_of_pages = int(link_header[last_index - 1].split("page")[-1].strip("=").strip(">"))
@@ -41,10 +42,10 @@ while True:
     count = 1
     go_ahead = True
     for i in response.json()['workflow_runs']:
-        if count == 1:
-            first_job_name = i['name']
-            count += 1
-            continue
+        #if count == 1:
+        #    first_job_name = i['name']
+        #    count += 1
+        #    continue
         #print(f"--- {count} ---")
         count += 1
         workflow_name = i['name']
@@ -55,9 +56,10 @@ while True:
         #print(i['conclusion'])
 
         status_list = ["in_progress", "queued", "requested", "waiting"]
-        if workflow_status in status_list and i['name'] == first_job_name:
+        if workflow_status in status_list:
             logging.info(f"Workflow '{workflow_name} (Run Number : #{workflow_run_number}) is currently in '{workflow_status}' State. Hence, waiting for 5 seconds")
-            os.system("sleep 5")
+            #os.system("sleep 5")
+            time.sleep(5)
             go_ahead = False
             no_wait = False
             break
