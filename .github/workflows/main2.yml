@@ -1,0 +1,61 @@
+name: Test Tactical 2
+
+on:
+  workflow_dispatch:
+    inputs:
+      COMMON_VERSION_201912:
+        type: string
+        required: true
+        default: 2019.1.2.0.1
+      COMMON_VERSION_202210:
+        type: string
+        required: true
+        default: 2022.1.0.0.1
+      TRIGGERED_BY_COMMON:
+        type: boolean
+        required: true
+        default: false
+
+env:
+  PATCH_VERSION_201912: 2019.1.2.0
+  PATCH_VERSION_202210: 2022.1.0.0
+ 
+jobs:
+  check_common:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Checkout SCPO
+        uses: actions/checkout@v3
+      
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.10' 
+
+      - run: pip install -r requirements.txt
+
+      - name: Check Common Workflow
+        run: |
+          python wait.py "${{ secrets.GITHUB_TOKEN }}" "${{inputs.TRIGGERED_BY_COMMON}}"
+
+  job1:
+    needs: check_common
+    runs-on: ubuntu-latest
+    steps:
+      - name: Wait for 5 Seconds
+        run: |
+          echo "COMMON 201912"
+          echo "${{inputs.COMMON_VERSION_201912}}"
+          echo "COMMON 202210"
+          echo "${{inputs.COMMON_VERSION_202210}}"
+          sleep 5
+      
+      #- name: Triggering one-off patch build
+      #  uses: convictional/trigger-workflow-and-wait@v1.3.0
+      #  with:
+      #    owner: Marripelli-Madhu_ghub
+      #    repo: tactical_test1
+      #    github_token: ${{ secrets.GITHUB_TOKEN }}
+      #    workflow_file_name: main.yaml
+      #    ref: ${{github.ref}}
+      #    inputs: '{"COMMON_VERSION_201912":"${{env.PATCH_VERSION_201912}}","COMMON_VERSION_202210":"${{env.PATCH_VERSION_202210}}"}'
