@@ -32,11 +32,12 @@ while True:
     print(response.status_code)
     #print(response.content)
     ##print(response.json())
-    ##print(response.headers)
-    link_header = (response.headers)['Link'].split(";")
-    last_index = link_header.index(' rel="last"')
-    number_of_pages = int(link_header[last_index - 1].split("page")[-1].strip("=").strip(">"))
-    #print(number_of_pages)
+    print(response.headers)
+    if 'Link' in response.headers.keys:
+        link_header = (response.headers)['Link'].split(";")
+        last_index = link_header.index(' rel="last"')
+        number_of_pages = int(link_header[last_index - 1].split("page")[-1].strip("=").strip(">"))
+        #print(number_of_pages)
     count = 1
     go_ahead = True
     for i in response.json()['workflow_runs']:
