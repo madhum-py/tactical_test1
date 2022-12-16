@@ -1,6 +1,7 @@
 name: Test Tactical
 
 on:
+  push:
   workflow_dispatch:
     inputs:
       COMMON_VERSION_201912:
@@ -11,6 +12,8 @@ on:
         type: string
         required: true
         default: 2022.1.0.0.1
+concurrency:
+  group: test-concurrency
 
 env:
   PATCH_VERSION_201912: 2019.1.2.0
