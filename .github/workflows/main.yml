@@ -48,7 +48,7 @@ jobs:
           echo "COMMON 202210"
           echo "${{inputs.COMMON_VERSION_202210}}"
           sleep 120
-      
+
       #- name: Triggering one-off patch build
       #  uses: convictional/trigger-workflow-and-wait@v1.3.0
       #  with:
