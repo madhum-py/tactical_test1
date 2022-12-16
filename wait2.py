@@ -28,7 +28,7 @@ headers = {
 proceed = False
 
 
-logging.info("Checking if there are any Jobs in Queue or In Progress")
+logging.info("Checking if there are any Upstream Jobs in Queue or In Progress")
 no_wait = True
 while True:
     response = requests.request(method="GET", url="https://api.github.com/repos/madhum-py/common_test/actions/runs?per_page=30", headers = headers)

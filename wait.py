@@ -21,7 +21,7 @@ headers = {
     'Authorization': gh_access_token
 }
 proceed = False
-logging.info("Checking if there are any Job in Queue or In Progress")
+logging.info("Checking if there are any Upstream jobs in Queue or In Progress")
 no_wait = True
 while True:
     response = requests.request(method="GET", url="https://api.github.com/repos/madhum-py/common_test/actions/runs?per_page=30", headers = headers)
@@ -46,7 +46,7 @@ while True:
 
         status_list = ["in_progress", "queued", "requested", "waiting"]
         if workflow_status in status_list:
-            logging.info(f"Workflow '{workflow_name} (Run Number : #{workflow_run_number}) is currently in '{workflow_status}' State. Hence, stopping this workflow")
+            logging.info(f"Upstream Workflow '{workflow_name} (Run Number : #{workflow_run_number}) is currently in '{workflow_status}' State. Hence, stopping this workflow")
             #os.system("sleep 5")
             sys.exit(1)
             go_ahead = False
@@ -55,5 +55,5 @@ while True:
         if count == 12:
             break
     if go_ahead:
-        logging.info("Common job is not in Queued/In Progress state. Hence, starting the Workflow")
+        logging.info("Upstream job is not in Queued/In Progress state. Hence, starting the Workflow")
         break
